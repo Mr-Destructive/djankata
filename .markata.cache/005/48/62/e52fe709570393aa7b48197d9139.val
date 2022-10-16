@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Richreadme</title>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Rich is a Python library for  The  For a video introduction to Rich see  See what  Rich works with Linux, OSX, and Windows. True color / emoji works with new Wi" name="description"/>
+<script>
+    function setTheme(theme) {
+        document.documentElement.setAttribute("data-theme", theme);
+    }
+
+    function detectColorSchemeOnLoad() {
+        //local storage is used to override OS theme settings
+        if (localStorage.getItem("theme")) {
+            if (localStorage.getItem("theme") == "dark") {
+                setTheme('dark')
+            } else if (localStorage.getItem("theme") == "light") {
+                setTheme('light')
+            }
+        } else if (!window.matchMedia) {
+            //matchMedia method not supported
+            setTheme('light')
+            return false;
+        } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            //OS theme setting detected as dark
+            setTheme('dark')
+        } else {
+            setTheme('light')
+        }
+    }
+    detectColorSchemeOnLoad();
+    document.addEventListener('DOMContentLoaded', function() {
+        //identify the toggle switch HTML element
+        const toggleSwitch = document.querySelector('#theme-switch input[type="checkbox"]');
+
+        //function that changes the theme, and sets a localStorage variable to track the theme between page loads
+        function switchTheme(e) {
+            if (e.target.checked) {
+                localStorage.setItem('theme', 'dark');
+                document.documentElement.setAttribute('data-theme', 'dark');
+                toggleSwitch.checked = true;
+            } else {
+                localStorage.setItem('theme', 'light');
+                document.documentElement.setAttribute('data-theme', 'light');
+                toggleSwitch.checked = false;
+            }
+        }
+
+        //listener for changing themes
+        toggleSwitch.addEventListener('change', switchTheme, false);
+
+        //pre-check the dark-theme checkbox if dark-theme is set
+        if (document.documentElement.getAttribute("data-theme") == "dark") {
+            toggleSwitch.checked = true;
+        }
+
+    }, false);
+
+  </script>
+<style>
+      :root {
+        --color-bg: #1f2022;
+        --color-bg-code: #1f2022;
+        --color-text: #eefbfe;
+        --color-link: #fb30c4; 
+        --color-accent: #e1bd00c9;
+        --overlay-brightness: .85;
+        --body-width: 800px;
+      }
+      [data-theme="dark"] {
+        --color-bg: #1f2022;
+        --color-bg-code: #1f2022;
+        --color-text: #eefbfe;
+        --color-link: #fb30c4; 
+        --color-accent: #e1bd00c9;
+        --overlay-brightness: .85;
+        --body-width: 800px;
+      }
+      [data-theme="light"] {
+        --color-bg: #eefbfe;
+        --color-bg-code: #eefbfe;
+        --color-text: #1f2022;
+        --color-link: #fb30c4; 
+        --color-accent: #ffeb00;
+        --overlay-brightness: .95;
+      }
+
+      html  { 
+        font-family: "Space Mono", monospace;
+        background: var(--color-bg);
+        color: var(--color-text);
+      }
+
+      a { 
+        color: var(--color-link);
+      }
+      main a { 
+        max-width: 100%;
+      }
+      .heading-permalink {
+        font-size: .7em;
+      }
+      body {
+        max-width: var(--body-width);
+        margin: 5rem auto;
+        padding: 0 .5rem;
+        font-size: 1rem;
+        line-height: 1.56;
+      }
+      blockquote {
+        background: var(--color-bg);
+        filter: brightness(var(--overlay-brightness));
+        border-left: 5px solid var(--color-accent);
+        padding-left: 1rem;
+        margin: 1rem;
+        }
+      li.post {
+        list-style-type: None;
+        padding: .2rem 0;
+      }
+      pre {
+        padding: 1rem;
+        max-width: fit-content;
+        overflow-x: auto;
+      }
+
+
+      .highlight  {
+        background: var(--color-bg-code);
+        color: var(--color-text);
+        filter: brightness(var(--overlay-brightness));
+      }
+      .highlight .c { color: #8b8b8b } /* Comment */
+      .highlight .err { color: #960050; background-color: #1e0010 } /* Error */
+      .highlight .k { color: #c678dd } /* Keyword */
+      .highlight .l { color: #ae81ff } /* Literal */
+      .highlight .n { color: #abb2bf } /* Name */
+      .highlight .o { color: #c678dd } /* Operator */
+      .highlight .p { color: #abb2bf } /* Punctuation */
+      .highlight .ch { color: #8b8b8b } /* Comment.Hashbang */
+      .highlight .cm { color: #8b8b8b } /* Comment.Multiline */
+      .highlight .cp { color: #8b8b8b } /* Comment.Preproc */
+      .highlight .cpf { color: #8b8b8b } /* Comment.PreprocFile */
+      .highlight .c1 { color: #8b8b8b } /* Comment.Single */
+      .highlight .cs { color: #8b8b8b } /* Comment.Special */
+      .highlight .gd { color: #c678dd } /* Generic.Deleted */
+      .highlight .ge { font-style: italic } /* Generic.Emph */
+      .highlight .gi { color: #a6e22e } /* Generic.Inserted */
+      .highlight .gs { font-weight: bold } /* Generic.Strong */
+      .highlight .gu { color: #8b8b8b } /* Generic.Subheading */
+      .highlight .kc { color: #c678dd } /* Keyword.Constant */
+      .highlight .kd { color: #c678dd } /* Keyword.Declaration */
+      .highlight .kn { color: #c678dd } /* Keyword.Namespace */
+      .highlight .kp { color: #c678dd } /* Keyword.Pseudo */
+      .highlight .kr { color: #c678dd } /* Keyword.Reserved */
+      .highlight .kt { color: #c678dd } /* Keyword.Type */
+      .highlight .ld { color: #e6db74 } /* Literal.Date */
+      .highlight .m { color: #ae81ff } /* Literal.Number */
+      .highlight .s { color: #e6db74 } /* Literal.String */
+      .highlight .na { color: #a6e22e } /* Name.Attribute */
+      .highlight .nb { color: #98c379 } /* Name.Builtin */
+      .highlight .nc { color: #abb2bf } /* Name.Class */
+      .highlight .no { color: #c678dd } /* Name.Constant */
+      .highlight .nd { color: #abb2bf } /* Name.Decorator */
+      .highlight .ni { color: #abb2bf } /* Name.Entity */
+      .highlight .ne { color: #a6e22e } /* Name.Exception */
+      .highlight .nf { color: #61afef } /* Name.Function */
+      .highlight .nl { color: #abb2bf } /* Name.Label */
+      .highlight .nn { color: #abb2bf } /* Name.Namespace */
+      .highlight .nx { color: #a6e22e } /* Name.Other */
+      .highlight .py { color: #abb2bf } /* Name.Property */
+      .highlight .nt { color: #c678dd } /* Name.Tag */
+      .highlight .nv { color: #abb2bf } /* Name.Variable */
+      .highlight .ow { color: #c678dd } /* Operator.Word */
+      .highlight .w { color: #abb2bf } /* Text.Whitespace */
+      .highlight .mb { color: #ae81ff } /* Literal.Number.Bin */
+      .highlight .mf { color: #ae81ff } /* Literal.Number.Float */
+      .highlight .mh { color: #ae81ff } /* Literal.Number.Hex */
+      .highlight .mi { color: #ae81ff } /* Literal.Number.Integer */
+      .highlight .mo { color: #ae81ff } /* Literal.Number.Oct */
+      .highlight .sa { color: #e6db74 } /* Literal.String.Affix */
+      .highlight .sb { color: #e6db74 } /* Literal.String.Backtick */
+      .highlight .sc { color: #e6db74 } /* Literal.String.Char */
+      .highlight .dl { color: #e6db74 } /* Literal.String.Delimiter */
+      .highlight .sd { color: #98c379 } /* Literal.String.Doc */
+      .highlight .s2 { color: #98c379 } /* Literal.String.Double */
+      .highlight .se { color: #ae81ff } /* Literal.String.Escape */
+      .highlight .sh { color: #e6db74 } /* Literal.String.Heredoc */
+      .highlight .si { color: #e6db74 } /* Literal.String.Interpol */
+      .highlight .sx { color: #e6db74 } /* Literal.String.Other */
+      .highlight .sr { color: #e6db74 } /* Literal.String.Regex */
+      .highlight .s1 { color: #e6db74 } /* Literal.String.Single */
+      .highlight .ss { color: #e6db74 } /* Literal.String.Symbol */
+      .highlight .bp { color: #abb2bf } /* Name.Builtin.Pseudo */
+      .highlight .fm { color: #61afef } /* Name.Function.Magic */
+      .highlight .vc { color: #abb2bf } /* Name.Variable.Class */
+      .highlight .vg { color: #abb2bf } /* Name.Variable.Global */
+      .highlight .vi { color: #abb2bf } /* Name.Variable.Instance */
+      .highlight .vm { color: #abb2bf } /* Name.Variable.Magic */
+      .highlight .il { color: #ae81ff } /* Literal.Number.Integer.Long */
+
+  /* Tab style starts here */
+  .tabbed-set {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 1em 0;
+  border-radius: 0.1rem;
+  }
+
+  .tabbed-set > input {
+  display: none;
+  }
+
+  .tabbed-set label {
+  width: auto;
+  padding: 0.9375em 1.25em 0.78125em;
+  font-weight: 700;
+  font-size: 0.84em;
+  white-space: nowrap;
+  border-bottom: 0.15rem solid transparent;
+  border-top-left-radius: 0.1rem;
+  border-top-right-radius: 0.1rem;
+  cursor: pointer;
+  transition: background-color 250ms, color 250ms;
+  }
+
+  .tabbed-set .tabbed-content {
+  width: 100%;
+  display: none;
+  box-shadow: 0 -.05rem #ddd;
+  }
+
+  .tabbed-set input {
+  position: absolute;
+  opacity: 0;
+  }
+
+  /* fonts */
+  h1 {
+    font-weight: 700;
+  }
+
+  h1#title a {
+    font-size: 16px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 3rem;
+  }
+
+  h1 {
+    font-size: 2.5em;
+    margin-top: 5rem;
+  }
+
+  h2 {
+    font-size: 1.63rem;
+    margin-top: 5rem;
+  }
+
+
+
+  p {
+    font-size: 21px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  @media only screen and (max-width: 700px) {
+    p {
+        font-size: 18px;
+    }
+  }
+
+  @media only screen and (max-width: 600px) {
+    p {
+        font-size: 16px;
+    }
+  }
+
+  @media only screen and (max-width: 500px) {
+    p {
+        font-size: 14px;
+    }
+  }
+
+  @media only screen and (max-width: 400px) {
+    p {
+        font-size: 12px;
+    }
+  }
+
+
+  pre {
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+    line-height: 18.5714px; */
+  }
+
+  a {
+    font-weight: 600;
+    text-decoration-color: var(--color-accent);
+    color: var(--color-link);
+    padding: .3rem .5rem;
+    display: inline-block;
+  }
+
+  .admonition {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    text-align: left;
+  }
+
+  .admonition.note {
+    color: #79d3e6;
+    background-color: #081d28;
+    border-color: #1c7183;
+  }
+
+  .admonition.warning {
+    color: #e6ca7a;
+    background-color: #4f4409;
+    border-color: #855c0d;
+  }
+
+  .admonition.danger {
+    color: #e67471;
+    background-color: #461c1c;
+    border-color: #6e2b33;
+  }
+
+  .admonition-title {
+    font-weight: bold;
+    text-align: left;
+  }
+
+  table {
+    margin: 1rem 0;
+    border-collapse: collapse;
+    border-spacing: 0;
+    display: block;
+    max-width: -moz-fit-content;
+    max-width: fit-content;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  table thead th {
+    border: solid 1px var(--color-text);
+    padding: 10px;
+    text-align: left;
+  }
+
+  table tbody td {
+    border: solid 1px var(--color-text);
+    padding: 10px;
+  }
+  .theme-switch {
+  z-index: 10;
+  display: inline-block;
+  height: 34px;
+  position: relative;
+  width: 60px;
+
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 1rem;
+    margin-left: auto;
+    position: fixed;
+    right: 1rem;
+    top: 1rem;
+  }
+
+  .theme-switch input {
+  display:none;
+
+  }
+
+  .slider {
+  background-color: #ccc;
+  bottom: 0;
+  cursor: pointer;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: .4s;
+  }
+
+  .slider:before {
+  background-color: #fff;
+  bottom: 4px;
+  content: "";
+  height: 26px;
+  left: 4px;
+  position: absolute;
+  transition: .4s;
+  width: 26px;
+  }
+
+  input:checked + .slider {
+  background-color: #343434;
+  }
+  input:checked + .slider:before {
+  background-color: #848484;
+  }
+
+  input:checked + .slider:before {
+  transform: translateX(26px);
+  }
+
+  .slider.round {
+  border-radius: 34px;
+  }
+
+  .slider.round:before {
+  border-radius: 50%;
+  }
+
+  main p img {
+    width: 100%;
+    width: -moz-available;
+    width: -webkit-fill-available;
+    width: fill-available;
+  }
+
+  </style>
+<meta content="" name="og:author" property="og:author"/><meta content="" name="og:author_email" property="og:author_email"/><meta content="website" name="og:type" property="og:type"/><meta content="Rich is a Python library for  The  For a video introduction to Rich see  See what  Rich works with Linux, OSX, and Windows. True color / emoji works with new Wi" name="description" property="description"/><meta content="Rich is a Python library for  The  For a video introduction to Rich see  See what  Rich works with Linux, OSX, and Windows. True color / emoji works with new Wi" name="og:description" property="og:description"/><meta content="Rich is a Python library for  The  For a video introduction to Rich see  See what  Rich works with Linux, OSX, and Windows. True color / emoji works with new Wi" name="twitter:description" property="twitter:description"/><meta content="Richreadme | " name="og:title" property="og:title"/><meta content="Richreadme | " name="twitter:title" property="twitter:title"/><meta content="/richreadme-og.png" name="og:image" property="og:image"/><meta content="/richreadme-og.png" name="twitter:image" property="twitter:image"/><meta content="1600" name="og:image:width" property="og:image:width"/><meta content="900" name="og:image:width" property="og:image:width"/><meta content="summary_large_image" name="twitter:card" property="twitter:card"/><meta content="" name="og:site_name" property="og:site_name"/><meta content="" name="twitter:creator" property="twitter:creator"/><meta content="Richreadme" name="title" property="title"/><meta content="markata 0.5.2" name="generator" property="generator"/><link href="/richreadme/" rel="canonical"/><meta content="/richreadme/" name="og:url" property="og:url"/></head>
+<body><nav>
+</nav>
+<div>
+<label class="theme-switch" for="checkbox-theme" id="theme-switch" title="light/dark mode toggle">
+<input id="checkbox-theme" type="checkbox"/>
+<div class="slider round"> </div>
+</label>
+</div>
+<section class="title">
+<h1 id="title">
+    Richreadme
+    
+      <a alt="edit post url" href="https://github.com/edit/main/.venv/lib/python3.10/site-packages/textual/richreadme.md" title="edit this post">
+<span aria-label="" role="img">
+<svg fill="currentcolor" height="30" id="Capa_1" style="enable-background:new 0 0 494.936 494.936;" version="1.1" viewbox="0 0 494.936 494.936" width="30" x="0px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0px">
+<g>
+<g>
+<path d="M389.844,182.85c-6.743,0-12.21,5.467-12.21,12.21v222.968c0,23.562-19.174,42.735-42.736,42.735H67.157
+                  c-23.562,0-42.736-19.174-42.736-42.735V150.285c0-23.562,19.174-42.735,42.736-42.735h267.741c6.743,0,12.21-5.467,12.21-12.21
+                  s-5.467-12.21-12.21-12.21H67.157C30.126,83.13,0,113.255,0,150.285v267.743c0,37.029,30.126,67.155,67.157,67.155h267.741
+                  c37.03,0,67.156-30.126,67.156-67.155V195.061C402.054,188.318,396.587,182.85,389.844,182.85z"></path>
+<path d="M483.876,20.791c-14.72-14.72-38.669-14.714-53.377,0L221.352,229.944c-0.28,0.28-3.434,3.559-4.251,5.396l-28.963,65.069
+                  c-2.057,4.619-1.056,10.027,2.521,13.6c2.337,2.336,5.461,3.576,8.639,3.576c1.675,0,3.362-0.346,4.96-1.057l65.07-28.963
+                  c1.83-0.815,5.114-3.97,5.396-4.25L483.876,74.169c7.131-7.131,11.06-16.61,11.06-26.692
+                  C494.936,37.396,491.007,27.915,483.876,20.791z M466.61,56.897L257.457,266.05c-0.035,0.036-0.055,0.078-0.089,0.107
+                  l-33.989,15.131L238.51,247.3c0.03-0.036,0.071-0.055,0.107-0.09L447.765,38.058c5.038-5.039,13.819-5.033,18.846,0.005
+                  c2.518,2.51,3.905,5.855,3.905,9.414C470.516,51.036,469.127,54.38,466.61,56.897z"></path>
+</g>
+</g>
+</svg>
+</span>
+</a>
+</h1>
+</section>
+<main>
+<p><a href="https://pepy.tech/project/rich"><img alt="Downloads" src="https://pepy.tech/badge/rich/month"/></a>
+<a href="https://badge.fury.io/py/rich"><img alt="PyPI version" src="https://badge.fury.io/py/rich.svg"/></a>
+<a href="https://codecov.io/gh/willmcgugan/rich"><img alt="codecov" src="https://codecov.io/gh/willmcgugan/rich/branch/master/graph/badge.svg"/></a>
+<a href="https://www.willmcgugan.com/tag/rich/"><img alt="Rich blog" src="https://img.shields.io/badge/blog-rich%20news-yellowgreen"/></a>
+<a href="https://twitter.com/willmcgugan"><img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/willmcgugan.svg?style=social"/></a></p>
+<p><img alt="Logo" src="https://github.com/willmcgugan/rich/raw/master/imgs/logo.svg"/></p>
+<p><a href="https://github.com/willmcgugan/rich/blob/master/README.cn.md">中文 readme</a> • <a href="https://github.com/willmcgugan/rich/blob/master/README.es.md">Lengua española readme</a> • <a href="https://github.com/willmcgugan/rich/blob/master/README.de.md">Deutsche readme</a> • <a href="https://github.com/willmcgugan/rich/blob/master/README.sv.md">Läs på svenska</a> • <a href="https://github.com/willmcgugan/rich/blob/master/README.ja.md">日本語 readme</a> • <a href="https://github.com/willmcgugan/rich/blob/master/README.kr.md">한국어 readme</a></p>
+<p>Rich is a Python library for <em>rich</em> text and beautiful formatting in the terminal.</p>
+<p>The <a href="https://rich.readthedocs.io/en/latest/">Rich API</a> makes it easy to add color and style to terminal output. Rich can also render pretty tables, progress bars, markdown, syntax highlighted source code, tracebacks, and more — out of the box.</p>
+<p><img alt="Features" src="https://github.com/willmcgugan/rich/raw/master/imgs/features.png"/></p>
+<p>For a video introduction to Rich see <a href="https://calmcode.io/rich/introduction.html">calmcode.io</a> by <a href="https://twitter.com/fishnets88">@fishnets88</a>.</p>
+<p>See what <a href="https://www.willmcgugan.com/blog/pages/post/rich-tweets/">people are saying about Rich</a>.</p>
+<h2 id="compatibility">Compatibility</h2>
+<p>Rich works with Linux, OSX, and Windows. True color / emoji works with new Windows Terminal, classic terminal is limited to 16 colors. Rich requires Python 3.6.1 or later.</p>
+<p>Rich works with <a href="https://jupyter.org/">Jupyter notebooks</a> with no additional configuration required.</p>
+<h2 id="installing">Installing</h2>
+<p>Install with <code>pip</code> or your favorite PyPi package manager.</p>
+<div class="highlight"><pre><span></span><code>pip install rich
+</code></pre></div>
+<p>Run the following to test Rich output on your terminal:</p>
+<div class="highlight"><pre><span></span><code>python -m rich
+</code></pre></div>
+<h2 id="rich-print">Rich Print</h2>
+<p>To effortlessly add rich output to your application, you can import the <a href="https://rich.readthedocs.io/en/latest/introduction.html#quick-start">rich print</a> method, which has the same signature as the builtin Python function. Try this:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">rich</span> <span class="kn">import</span> <span class="nb">print</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Hello, [bold magenta]World[/bold magenta]!"</span><span class="p">,</span> <span class="s2">":vampire:"</span><span class="p">,</span> <span class="nb">locals</span><span class="p">())</span>
+</code></pre></div>
+<p><img alt="Hello World" src="https://github.com/willmcgugan/rich/raw/master/imgs/print.png"/></p>
+<h2 id="rich-repl">Rich REPL</h2>
+<p>Rich can be installed in the Python REPL, so that any data structures will be pretty printed and highlighted.</p>
+<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">rich</span> <span class="kn">import</span> <span class="n">pretty</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">pretty</span><span class="o">.</span><span class="n">install</span><span class="p">()</span>
+</code></pre></div>
+<p><img alt="REPL" src="https://github.com/willmcgugan/rich/raw/master/imgs/repl.png"/></p>
+<h2 id="using-the-console">Using the Console</h2>
+<p>For more control over rich terminal content, import and construct a <a href="https://rich.readthedocs.io/en/latest/reference/console.html#rich.console.Console">Console</a> object.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">rich.console</span> <span class="kn">import</span> <span class="n">Console</span>
+
+<span class="n">console</span> <span class="o">=</span> <span class="n">Console</span><span class="p">()</span>
+</code></pre></div>
+<p>The Console object has a <code>print</code> method which has an intentionally similar interface to the builtin <code>print</code> function. Here's an example of use:</p>
+<div class="highlight"><pre><span></span><code><span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="s2">"Hello"</span><span class="p">,</span> <span class="s2">"World!"</span><span class="p">)</span>
+</code></pre></div>
+<p>As you might expect, this will print <code>"Hello World!"</code> to the terminal. Note that unlike the builtin <code>print</code> function, Rich will word-wrap your text to fit within the terminal width.</p>
+<p>There are a few ways of adding color and style to your output. You can set a style for the entire output by adding a <code>style</code> keyword argument. Here's an example:</p>
+<div class="highlight"><pre><span></span><code><span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="s2">"Hello"</span><span class="p">,</span> <span class="s2">"World!"</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">"bold red"</span><span class="p">)</span>
+</code></pre></div>
+<p>The output will be something like the following:</p>
+<p><img alt="Hello World" src="https://github.com/willmcgugan/rich/raw/master/imgs/hello_world.png"/></p>
+<p>That's fine for styling a line of text at a time. For more finely grained styling, Rich renders a special markup which is similar in syntax to <a href="https://en.wikipedia.org/wiki/BBCode">bbcode</a>. Here's an example:</p>
+<div class="highlight"><pre><span></span><code><span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="s2">"Where there is a [bold cyan]Will[/bold cyan] there [u]is[/u] a [i]way[/i]."</span><span class="p">)</span>
+</code></pre></div>
+<p><img alt="Console Markup" src="https://github.com/willmcgugan/rich/raw/master/imgs/where_there_is_a_will.png"/></p>
+<p>You can use a Console object to generate sophisticated output with minimal effort. See the <a href="https://rich.readthedocs.io/en/latest/console.html">Console API</a> docs for details.</p>
+<h2 id="rich-inspect">Rich Inspect</h2>
+<p>Rich has an <a href="https://rich.readthedocs.io/en/latest/reference/init.html?highlight=inspect#rich.inspect">inspect</a> function which can produce a report on any Python object, such as class, instance, or builtin.</p>
+<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"foo"</span><span class="p">,</span> <span class="s2">"bar"</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="nn">rich</span> <span class="kn">import</span> <span class="n">inspect</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">inspect</span><span class="p">(</span><span class="n">my_list</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+<p><img alt="Log" src="https://github.com/willmcgugan/rich/raw/master/imgs/inspect.png"/></p>
+<p>See the <a href="https://rich.readthedocs.io/en/latest/reference/init.html#rich.inspect">inspect docs</a> for details.</p>
+<h1 id="rich-library">Rich Library</h1>
+<p>Rich contains a number of builtin <em>renderables</em> you can use to create elegant output in your CLI and help you debug your code.</p>
+<p>Click the following headings for details:</p>
+<details>
+<summary>Log</summary>
+
+The Console object has a `log()` method which has a similar interface to `print()`, but also renders a column for the current time and the file and line which made the call. By default Rich will do syntax highlighting for Python structures and for repr strings. If you log a collection (i.e. a dict or a list) Rich will pretty print it so that it fits in the available space. Here's an example of some of these features.
+
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">rich.console</span> <span class="kn">import</span> <span class="n">Console</span>
+<span class="n">console</span> <span class="o">=</span> <span class="n">Console</span><span class="p">()</span>
+
+<span class="n">test_data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s2">"jsonrpc"</span><span class="p">:</span> <span class="s2">"2.0"</span><span class="p">,</span> <span class="s2">"method"</span><span class="p">:</span> <span class="s2">"sum"</span><span class="p">,</span> <span class="s2">"params"</span><span class="p">:</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">],</span> <span class="s2">"id"</span><span class="p">:</span> <span class="s2">"1"</span><span class="p">,},</span>
+    <span class="p">{</span><span class="s2">"jsonrpc"</span><span class="p">:</span> <span class="s2">"2.0"</span><span class="p">,</span> <span class="s2">"method"</span><span class="p">:</span> <span class="s2">"notify_hello"</span><span class="p">,</span> <span class="s2">"params"</span><span class="p">:</span> <span class="p">[</span><span class="mi">7</span><span class="p">]},</span>
+    <span class="p">{</span><span class="s2">"jsonrpc"</span><span class="p">:</span> <span class="s2">"2.0"</span><span class="p">,</span> <span class="s2">"method"</span><span class="p">:</span> <span class="s2">"subtract"</span><span class="p">,</span> <span class="s2">"params"</span><span class="p">:</span> <span class="p">[</span><span class="mi">42</span><span class="p">,</span> <span class="mi">23</span><span class="p">],</span> <span class="s2">"id"</span><span class="p">:</span> <span class="s2">"2"</span><span class="p">},</span>
+<span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">test_log</span><span class="p">():</span>
+    <span class="n">enabled</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">"foo"</span><span class="p">:</span> <span class="s2">"bar"</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">movies</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"Deadpool"</span><span class="p">,</span> <span class="s2">"Rise of the Skywalker"</span><span class="p">]</span>
+    <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">"Hello from"</span><span class="p">,</span> <span class="n">console</span><span class="p">,</span> <span class="s2">"!"</span><span class="p">)</span>
+    <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">test_data</span><span class="p">,</span> <span class="n">log_locals</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<span class="n">test_log</span><span class="p">()</span>
+</code></pre></div>
+
+The above produces the following output:
+
+![Log](https://github.com/willmcgugan/rich/raw/master/imgs/log.png)
+
+Note the `log_locals` argument, which outputs a table containing the local variables where the log method was called.
+
+The log method could be used for logging to the terminal for long running applications such as servers, but is also a very nice debugging aid.
+
+</details>
+<details>
+<summary>Logging Handler</summary>
+
+You can also use the builtin [Handler class](https://rich.readthedocs.io/en/latest/logging.html) to format and colorize output from Python's logging module. Here's an example of the output:
+
+![Logging](https://github.com/willmcgugan/rich/raw/master/imgs/logging.png)
+
+</details>
+<details>
+<summary>Emoji</summary>
+
+To insert an emoji in to console output place the name between two colons. Here's an example:
+
+<div class="highlight"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="s2">":smiley: :vampire: :pile_of_poo: :thumbs_up: :raccoon:"</span><span class="p">)</span>
+<span class="err">😃</span> <span class="err">🧛</span> <span class="err">💩</span> <span class="err">👍</span> <span class="err">🦝</span>
+</code></pre></div>
+
+Please use this feature wisely.
+
+</details>
+<details>
+<summary>Tables</summary>
+
+Rich can render flexible [tables](https://rich.readthedocs.io/en/latest/tables.html) with unicode box characters. There is a large variety of formatting options for borders, styles, cell alignment etc.
+
+![table movie](https://github.com/willmcgugan/rich/raw/master/imgs/table_movie.gif)
+
+The animation above was generated with [table_movie.py](https://github.com/willmcgugan/rich/blob/master/examples/table_movie.py) in the examples directory.
+
+Here's a simpler table example:
+
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">rich.console</span> <span class="kn">import</span> <span class="n">Console</span>
+<span class="kn">from</span> <span class="nn">rich.table</span> <span class="kn">import</span> <span class="n">Table</span>
+
+<span class="n">console</span> <span class="o">=</span> <span class="n">Console</span><span class="p">()</span>
+
+<span class="n">table</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span><span class="n">show_header</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">header_style</span><span class="o">=</span><span class="s2">"bold magenta"</span><span class="p">)</span>
+<span class="n">table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="s2">"Date"</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">"dim"</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="s2">"Title"</span><span class="p">)</span>
+<span class="n">table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="s2">"Production Budget"</span><span class="p">,</span> <span class="n">justify</span><span class="o">=</span><span class="s2">"right"</span><span class="p">)</span>
+<span class="n">table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="s2">"Box Office"</span><span class="p">,</span> <span class="n">justify</span><span class="o">=</span><span class="s2">"right"</span><span class="p">)</span>
+<span class="n">table</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span>
+    <span class="s2">"Dev 20, 2019"</span><span class="p">,</span> <span class="s2">"Star Wars: The Rise of Skywalker"</span><span class="p">,</span> <span class="s2">"$275,000,000"</span><span class="p">,</span> <span class="s2">"$375,126,118"</span>
+<span class="p">)</span>
+<span class="n">table</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span>
+    <span class="s2">"May 25, 2018"</span><span class="p">,</span>
+    <span class="s2">"[red]Solo[/red]: A Star Wars Story"</span><span class="p">,</span>
+    <span class="s2">"$275,000,000"</span><span class="p">,</span>
+    <span class="s2">"$393,151,347"</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">table</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span>
+    <span class="s2">"Dec 15, 2017"</span><span class="p">,</span>
+    <span class="s2">"Star Wars Ep. VIII: The Last Jedi"</span><span class="p">,</span>
+    <span class="s2">"$262,000,000"</span><span class="p">,</span>
+    <span class="s2">"[bold]$1,332,539,889[/bold]"</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+</code></pre></div>
+
+This produces the following output:
+
+![table](https://github.com/willmcgugan/rich/raw/master/imgs/table.png)
+
+Note that console markup is rendered in the same way as `print()` and `log()`. In fact, anything that is renderable by Rich may be included in the headers / rows (even other tables).
+
+The `Table` class is smart enough to resize columns to fit the available width of the terminal, wrapping text as required. Here's the same example, with the terminal made smaller than the table above:
+
+![table2](https://github.com/willmcgugan/rich/raw/master/imgs/table2.png)
+
+</details>
+<details>
+<summary>Progress Bars</summary>
+
+Rich can render multiple flicker-free [progress](https://rich.readthedocs.io/en/latest/progress.html) bars to track long-running tasks.
+
+For basic usage, wrap any sequence in the `track` function and iterate over the result. Here's an example:
+
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">rich.progress</span> <span class="kn">import</span> <span class="n">track</span>
+
+<span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="n">track</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)):</span>
+    <span class="n">do_step</span><span class="p">(</span><span class="n">step</span><span class="p">)</span>
+</code></pre></div>
+
+It's not much harder to add multiple progress bars. Here's an example taken from the docs:
+
+![progress](https://github.com/willmcgugan/rich/raw/master/imgs/progress.gif)
+
+The columns may be configured to show any details you want. Built-in columns include percentage complete, file size, file speed, and time remaining. Here's another example showing a download in progress:
+
+![progress](https://github.com/willmcgugan/rich/raw/master/imgs/downloader.gif)
+
+To try this out yourself, see [examples/downloader.py](https://github.com/willmcgugan/rich/blob/master/examples/downloader.py) which can download multiple URLs simultaneously while displaying progress.
+
+</details>
+<details>
+<summary>Status</summary>
+
+For situations where it is hard to calculate progress, you can use the [status](https://rich.readthedocs.io/en/latest/reference/console.html#rich.console.Console.status) method which will display a 'spinner' animation and message. The animation won't prevent you from using the console as normal. Here's an example:
+
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+<span class="kn">from</span> <span class="nn">rich.console</span> <span class="kn">import</span> <span class="n">Console</span>
+
+<span class="n">console</span> <span class="o">=</span> <span class="n">Console</span><span class="p">()</span>
+<span class="n">tasks</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">"task </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)]</span>
+
+<span class="k">with</span> <span class="n">console</span><span class="o">.</span><span class="n">status</span><span class="p">(</span><span class="s2">"[bold green]Working on tasks..."</span><span class="p">)</span> <span class="k">as</span> <span class="n">status</span><span class="p">:</span>
+    <span class="k">while</span> <span class="n">tasks</span><span class="p">:</span>
+        <span class="n">task</span> <span class="o">=</span> <span class="n">tasks</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">console</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">task</span><span class="si">}</span><span class="s2"> complete"</span><span class="p">)</span>
+</code></pre></div>
+
+This generates the following output in the terminal.
+
+![status](https://github.com/willmcgugan/rich/raw/master/imgs/status.gif)
+
+The spinner animations were borrowed from [cli-spinners](https://www.npmjs.com/package/cli-spinners). You can select a spinner by specifying the `spinner` parameter. Run the following command to see the available values:
+
+<div class="highlight"><pre><span></span><code>python -m rich.spinner
+</code></pre></div>
+
+The above command generate the following output in the terminal:
+
+![spinners](https://github.com/willmcgugan/rich/raw/master/imgs/spinners.gif)
+
+</details>
+<details>
+<summary>Tree</summary>
+
+Rich can render a [tree](https://rich.readthedocs.io/en/latest/tree.html) with guide lines. A tree is ideal for displaying a file structure, or any other hierarchical data.
+
+The labels of the tree can be simple text or anything else Rich can render. Run the following for a demonstration:
+
+<div class="highlight"><pre><span></span><code>python -m rich.tree
+</code></pre></div>
+
+This generates the following output:
+
+![markdown](https://github.com/willmcgugan/rich/raw/master/imgs/tree.png)
+
+See the [tree.py](https://github.com/willmcgugan/rich/blob/master/examples/tree.py) example for a script that displays a tree view of any directory, similar to the linux `tree` command.
+
+</details>
+<details>
+<summary>Columns</summary>
+
+Rich can render content in neat [columns](https://rich.readthedocs.io/en/latest/columns.html) with equal or optimal width. Here's a very basic clone of the (MacOS / Linux) `ls` command which displays a directory listing in columns:
+
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">rich</span> <span class="kn">import</span> <span class="nb">print</span>
+<span class="kn">from</span> <span class="nn">rich.columns</span> <span class="kn">import</span> <span class="n">Columns</span>
+
+<span class="n">directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">Columns</span><span class="p">(</span><span class="n">directory</span><span class="p">))</span>
+</code></pre></div>
+
+The following screenshot is the output from the [columns example](https://github.com/willmcgugan/rich/blob/master/examples/columns.py) which displays data pulled from an API in columns:
+
+![columns](https://github.com/willmcgugan/rich/raw/master/imgs/columns.png)
+
+</details>
+<details>
+<summary>Markdown</summary>
+
+Rich can render [markdown](https://rich.readthedocs.io/en/latest/markdown.html) and does a reasonable job of translating the formatting to the terminal.
+
+To render markdown import the `Markdown` class and construct it with a string containing markdown code. Then print it to the console. Here's an example:
+
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">rich.console</span> <span class="kn">import</span> <span class="n">Console</span>
+<span class="kn">from</span> <span class="nn">rich.markdown</span> <span class="kn">import</span> <span class="n">Markdown</span>
+
+<span class="n">console</span> <span class="o">=</span> <span class="n">Console</span><span class="p">()</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">"README.md"</span><span class="p">)</span> <span class="k">as</span> <span class="n">readme</span><span class="p">:</span>
+    <span class="n">markdown</span> <span class="o">=</span> <span class="n">Markdown</span><span class="p">(</span><span class="n">readme</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+<span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">markdown</span><span class="p">)</span>
+</code></pre></div>
+
+This will produce output something like the following:
+
+![markdown](https://github.com/willmcgugan/rich/raw/master/imgs/markdown.png)
+
+</details>
+<details>
+<summary>Syntax Highlighting</summary>
+
+Rich uses the [pygments](https://pygments.org/) library to implement [syntax highlighting](https://rich.readthedocs.io/en/latest/syntax.html). Usage is similar to rendering markdown; construct a `Syntax` object and print it to the console. Here's an example:
+
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">rich.console</span> <span class="kn">import</span> <span class="n">Console</span>
+<span class="kn">from</span> <span class="nn">rich.syntax</span> <span class="kn">import</span> <span class="n">Syntax</span>
+
+<span class="n">my_code</span> <span class="o">=</span> <span class="s1">'''</span>
+<span class="s1">def iter_first_last(values: Iterable[T]) -&gt; Iterable[Tuple[bool, bool, T]]:</span>
+<span class="s1">    """Iterate and generate a tuple with a flag for first and last value."""</span>
+<span class="s1">    iter_values = iter(values)</span>
+<span class="s1">    try:</span>
+<span class="s1">        previous_value = next(iter_values)</span>
+<span class="s1">    except StopIteration:</span>
+<span class="s1">        return</span>
+<span class="s1">    first = True</span>
+<span class="s1">    for value in iter_values:</span>
+<span class="s1">        yield first, False, previous_value</span>
+<span class="s1">        first = False</span>
+<span class="s1">        previous_value = value</span>
+<span class="s1">    yield first, True, previous_value</span>
+<span class="s1">'''</span>
+<span class="n">syntax</span> <span class="o">=</span> <span class="n">Syntax</span><span class="p">(</span><span class="n">my_code</span><span class="p">,</span> <span class="s2">"python"</span><span class="p">,</span> <span class="n">theme</span><span class="o">=</span><span class="s2">"monokai"</span><span class="p">,</span> <span class="n">line_numbers</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">console</span> <span class="o">=</span> <span class="n">Console</span><span class="p">()</span>
+<span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">syntax</span><span class="p">)</span>
+</code></pre></div>
+
+This will produce the following output:
+
+![syntax](https://github.com/willmcgugan/rich/raw/master/imgs/syntax.png)
+
+</details>
+<details>
+<summary>Tracebacks</summary>
+
+Rich can render [beautiful tracebacks](https://rich.readthedocs.io/en/latest/traceback.html) which are easier to read and show more code than standard Python tracebacks. You can set Rich as the default traceback handler so all uncaught exceptions will be rendered by Rich.
+
+Here's what it looks like on OSX (similar on Linux):
+
+![traceback](https://github.com/willmcgugan/rich/raw/master/imgs/traceback.png)
+
+</details>
+<p>All Rich renderables make use of the <a href="https://rich.readthedocs.io/en/latest/protocol.html">Console Protocol</a>, which you can also use to implement your own Rich content.</p>
+<h1 id="rich-for-enterprise">Rich for enterprise</h1>
+<p>Available as part of the Tidelift Subscription.</p>
+<p>The maintainers of Rich and thousands of other packages are working with Tidelift to deliver commercial support and maintenance for the open source packages you use to build your applications. Save time, reduce risk, and improve code health, while paying the maintainers of the exact packages you use. <a href="https://tidelift.com/subscription/pkg/pypi-rich?utm_source=pypi-rich&amp;utm_medium=referral&amp;utm_campaign=enterprise&amp;utm_term=repo">Learn more.</a></p>
+<h1 id="project-using-rich">Project using Rich</h1>
+<p>Here are a few projects using Rich:</p>
+<ul>
+<li><a href="https://github.com/BrancoLab/BrainRender">BrancoLab/BrainRender</a>
+  a python package for the visualization of three dimensional neuro-anatomical data</li>
+<li><a href="https://github.com/Ciphey/Ciphey">Ciphey/Ciphey</a>
+  Automated decryption tool</li>
+<li><a href="https://github.com/emeryberger/scalene">emeryberger/scalene</a>
+  a high-performance, high-precision CPU and memory profiler for Python</li>
+<li><a href="https://github.com/hedythedev/starcli">hedythedev/StarCli</a>
+  Browse GitHub trending projects from your command line</li>
+<li><a href="https://github.com/intel/cve-bin-tool">intel/cve-bin-tool</a>
+  This tool scans for a number of common, vulnerable components (openssl, libpng, libxml2, expat and a few others) to let you know if your system includes common libraries with known vulnerabilities.</li>
+<li><a href="https://github.com/nf-core/tools">nf-core/tools</a>
+  Python package with helper tools for the nf-core community.</li>
+<li><a href="https://github.com/cansarigol/pdbr">cansarigol/pdbr</a>
+  pdb + Rich library for enhanced debugging</li>
+<li><a href="https://github.com/plant99/felicette">plant99/felicette</a>
+  Satellite imagery for dummies.</li>
+<li><a href="https://github.com/seleniumbase/SeleniumBase">seleniumbase/SeleniumBase</a>
+  Automate &amp; test 10x faster with Selenium &amp; pytest. Batteries included.</li>
+<li><a href="https://github.com/smacke/ffsubsync">smacke/ffsubsync</a>
+  Automagically synchronize subtitles with video.</li>
+<li><a href="https://github.com/tryolabs/norfair">tryolabs/norfair</a>
+  Lightweight Python library for adding real-time 2D object tracking to any detector.</li>
+<li><a href="https://github.com/ansible/ansible-lint">ansible/ansible-lint</a> Ansible-lint checks playbooks for practices and behaviour that could potentially be improved</li>
+<li><a href="https://github.com/ansible-community/molecule">ansible-community/molecule</a> Ansible Molecule testing framework</li>
+<li>+<a href="https://github.com/willmcgugan/rich/network/dependents">Many more</a>!</li>
+</ul>
+<!-- This is a test, no need to translate -->
+</main>
+<footer>
+    © 2022
+  </footer>
+</body></html>
