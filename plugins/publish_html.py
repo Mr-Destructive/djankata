@@ -34,7 +34,6 @@ def pre_render(markata: "Markata") -> None:
             article["output_html"] = output_dir / "index.html"
         else:
             article["output_html"] = output_dir / article["slug"] 
-        print(article["output_html"])
 
 
 @hook_impl

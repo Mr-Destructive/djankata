@@ -21,7 +21,7 @@ def pre_render(markata: "Markata") -> None:
         )
         if should_slugify:
             article["slug"] = "/".join([slugify(s) for s in stem.split("/")])
-        #else:
-        #    print(article["slug"])
+        else:
+            article["slug"] = stem
 
         article["slug"] += "/index.html"
