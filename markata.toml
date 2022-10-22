@@ -1,3 +1,38 @@
 
 [markata]
-glob_patterns = "pages/**/*.md"
+glob_patterns = "blog/pages/**/*.md"
+
+hooks = [
+    "plugins.flat_slugs",
+    "plugins.publish_source",
+    "plugins.publish_html",
+
+    "markata.cli.cli",
+    "markata.cli.header",
+    "markata.cli.plugins",
+    "markata.cli.runner",
+    "markata.cli.server",
+    "markata.cli.summary",
+    "markata.plugins.auto_title",
+    "markata.plugins.base_cli",
+    "markata.plugins.copy_assets",
+    "markata.plugins.covers",
+    "markata.plugins.datetime",
+    "markata.plugins.feeds",
+    "markata.plugins.generator",
+    "markata.plugins.glob",
+    "markata.plugins.icon_resize",
+    "markata.plugins.load",
+    "markata.plugins.auto_description",
+    "markata.plugins.post_template",
+    "markata.plugins.pyinstrument",
+    "markata.plugins.render_markdown",
+    "markata.plugins.sitemap",
+    "markata.plugins.to_json",
+    "markata.plugins.tui",
+    "markata.background",
+    "markata.hookspec",
+    "markata.lifecycle",
+    "markata.errors",
+    "markata.standard_config",
+]

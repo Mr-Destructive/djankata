@@ -79,3 +79,4 @@ sftp-config.json
 
 # markata
 markout/
+.markata.cache
