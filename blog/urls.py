@@ -9,5 +9,5 @@ MARKOUT_URL = '/'
 MARKOUT_DIR = (MARKOUT_URL,)
 
 urlpatterns = [
-        path('', archives),
+        path('', archives, name="archive"),
     ] + static(MARKOUT_URL, document_root=MARKOUT_ROOT)

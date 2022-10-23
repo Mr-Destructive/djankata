@@ -2,10 +2,13 @@
 [markata]
 glob_patterns = "blog/pages/**/*.md"
 
+post_template="plugins/default_post_template.html"
+
 hooks = [
     "plugins.flat_slugs",
     "plugins.publish_source",
     "plugins.publish_html",
+    "plugins.load",
 
     "markata.cli.cli",
     "markata.cli.header",
@@ -22,7 +25,6 @@ hooks = [
     "markata.plugins.generator",
     "markata.plugins.glob",
     "markata.plugins.icon_resize",
-    "markata.plugins.load",
     "markata.plugins.auto_description",
     "markata.plugins.post_template",
     "markata.plugins.pyinstrument",
