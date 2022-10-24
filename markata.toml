@@ -21,9 +21,9 @@ hooks = [
     "markata.plugins.copy_assets",
     "markata.plugins.covers",
     "markata.plugins.datetime",
-    "markata.plugins.feeds",
     "markata.plugins.generator",
     "markata.plugins.glob",
+    "markata.plugins.feeds",
     "markata.plugins.icon_resize",
     "markata.plugins.auto_description",
     "markata.plugins.post_template",
@@ -38,3 +38,7 @@ hooks = [
     "markata.errors",
     "markata.standard_config",
 ]
+
+[markata.feeds.archive]
+template="plugins/archive_template.html"
+filter="True"

@@ -1,6 +1,6 @@
 import os
 from django.urls import path
-from .views import archives
+from .views import archives, build
 from django.conf.urls.static import static
 from djankata import settings
 
@@ -10,4 +10,5 @@ MARKOUT_DIR = (MARKOUT_URL,)
 
 urlpatterns = [
         path('', archives, name="archive"),
+        path('build/', build, name="build"),
     ] + static(MARKOUT_URL, document_root=MARKOUT_ROOT)
