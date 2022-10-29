@@ -62,7 +62,7 @@ def get_post(path: Path, markata: "Markata") -> Optional[Callable]:
     from blog.models import Article
     articles = Article.objects.all()
     if post["title"] in articles.values_list("title", flat=True):
-        id = articles.get(title=post["title"]).id
+        id = articles.filter(title=post["title"])[0].id
         post["edit_link"] = f"/admin/blog/article/{id}/change"
     else:
         post["edit_link"] = f"/admin/blog/article/"
