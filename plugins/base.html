@@ -474,8 +474,8 @@
   </div>
   <section class='title'>
   <h1 id='title'>
-     {{ title }}
      {% block base %}
+     {{ title }}
      {% if config.get('edit', True) %}
       <a href="{{ edit_link }}" alt="edit post url" title="edit this post">
           <span role="img" aria-label="">

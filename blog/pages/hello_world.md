@@ -1,6 +1,7 @@
 ---
 templateKey: blog 
 title: hello world
+tags: ['python', 'django']
 status: published
 ---
     ## heading

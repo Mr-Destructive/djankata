@@ -1,5 +1,13 @@
 {% extends 'plugins/base.html' %}
 {% block base %}
+    {{ title }}
+    <ul>
+        {% for feed in feeds_list%}
+        <a href="/{{feed}}/index.html">
+            {{ feed }}
+        </a>
+        {% endfor %}
+    </ul>
           <a href="/add/" alt="Add Article" title="Add Article">
         <svg width="24" height="25" viewBox="0 0 24 25" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
         <rect x="8.5" y="15.5" width="7" height="9" />
@@ -11,6 +19,9 @@
         </svg>
           </a>
           <a href="/build/" alt="Build" title="Build">Build</a>
+          <a href="/input-feed" alt="Create Custom Feed" title="Create Custom Feed">
+              CustomFeed
+          </a>
       </h1>
   </section>
   <main>

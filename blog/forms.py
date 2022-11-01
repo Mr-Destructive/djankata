@@ -22,3 +22,12 @@ class ArticleForm(forms.ModelForm):
                 }
             ),
         }
+
+class CustomFeedsForm(forms.Form):
+    name = forms.CharField(max_length=64)
+    filter = forms.CharField(max_length=256)
+    class Meta:
+        widgets = {
+            "name": forms.TextInput(),
+            "filters": forms.TextInput(),
+        }

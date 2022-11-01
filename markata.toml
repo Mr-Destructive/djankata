@@ -42,3 +42,4 @@ hooks = [
 [markata.feeds.archive]
 template="plugins/archive_template.html"
 filter="True"
+

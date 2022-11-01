@@ -48,6 +48,8 @@ def save(markata: Markata) -> None:
     Creates a new feed page for each page in the config.
     """
     feeds = markata.config.get("feeds", {})
+    all_feeds = feeds.keys()
+    print(all_feeds)
 
     description = markata.get_config("description") or ""
     url = markata.get_config("url") or ""
@@ -59,6 +61,7 @@ def save(markata: Markata) -> None:
             page,
             description=description,
             url=url,
+            feeds_list=all_feeds,
             **page_conf,
         )
 
@@ -109,6 +112,7 @@ def create_page(
     cards = [create_card(post, card_template) for post in posts]
     cards.insert(0, "<ul>")
     cards.append("</ul>")
+    title = page
 
     with open(template) as f:
         env = Environment()
@@ -136,6 +140,7 @@ def create_page(
                 title=title,
                 canonical_url=canonical_url,
                 today=datetime.datetime.today(),
+                feeds_list=rest["feeds_list"],
                 config=markata.config,
             )
         )
