@@ -31,3 +31,16 @@ class CustomFeedsForm(forms.Form):
             "name": forms.TextInput(),
             "filters": forms.TextInput(),
         }
+
+class ArticleMarkdownForm(forms.Form):
+    markdown_content = forms.CharField(widget=forms.Textarea)
+    class Meta:
+        widgets = {
+            "markdown_content": forms.Textarea(
+                attrs={
+                    "class": "form-control",
+                    "style": "max-width: 900px;",
+                    "placeholder": "Content",
+                }
+            ),
+        }
