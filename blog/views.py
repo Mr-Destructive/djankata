@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.core.management import call_command
 from blog.forms import ArticleForm, ArticleMarkdownForm, CustomFeedsForm
 from blog.models import Article
+from blog.signals import write_markdown_post
 from markata import Markata
 
 CONFIG_FILE = 'markata.toml'
@@ -78,7 +79,10 @@ def ArticleEditMarkdown(request, title):
         markdown_content = f.read()
     form = ArticleMarkdownForm(initial={'markdown_content':markdown_content})
     if request.method == 'POST':
+        form = ArticleMarkdownForm(request.POST or {'markdown_content':markdown_content})
+        article = request.POST.get("markdown_content")
         if form.is_valid():
+            write_markdown_post(article)
             build(request)
             return render(request, 'markout/archive/index.html')
     context = {'form': form, 'title':title}

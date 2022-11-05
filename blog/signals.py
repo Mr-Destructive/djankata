@@ -1,3 +1,4 @@
+import frontmatter
 from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
 from pathlib import Path
@@ -27,3 +28,12 @@ status: {instance.status}
     article["edit_link"] = f"/admin/blog/article/{instance.id}/change"
 
     return redirect("archive")
+
+def write_markdown_post(article):
+    import frontmatter
+    post = frontmatter.loads(article)
+    title_path = post.get('title').replace(" ", "_")
+    with open(Path("blog/pages") / f"{title_path}.md", 'w', encoding="utf-8") as f:
+        f.write(article)
+
+
