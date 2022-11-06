@@ -30,10 +30,8 @@ status: {instance.status}
     return redirect("archive")
 
 def write_markdown_post(article):
-    import frontmatter
     post = frontmatter.loads(article)
     title_path = post.get('title').replace(" ", "_")
     with open(Path("blog/pages") / f"{title_path}.md", 'w', encoding="utf-8") as f:
         f.write(article)
-
 

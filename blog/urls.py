@@ -1,6 +1,6 @@
 import os
 from django.urls import path
-from .views import ArticleEditMarkdown, archives, build, createArticle, customFeedGenerator, inputCustomFeed
+from .views import ArticleEditMarkdown, archives, build, createArticle, customFeedGenerator, inputCustomFeed, render_markdown
 from django.conf.urls.static import static
 from djankata import settings
 
@@ -15,4 +15,5 @@ urlpatterns = [
         path('input-feed', inputCustomFeed, name='input-feed-gen'),
         path('generate/', customFeedGenerator, name='custom-feed-gen'),
         path('edit-mark/<str:title>', ArticleEditMarkdown, name='edit-markdown'),
+        path('preview/', render_markdown, name='preview'),
     ] + static(MARKOUT_URL, document_root=MARKOUT_ROOT)

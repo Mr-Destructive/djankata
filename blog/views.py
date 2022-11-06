@@ -1,3 +1,4 @@
+import markdown
 from django.shortcuts import render
 from django.core.management import call_command
 from blog.forms import ArticleForm, ArticleMarkdownForm, CustomFeedsForm
@@ -87,3 +88,9 @@ def ArticleEditMarkdown(request, title):
             return render(request, 'markout/archive/index.html')
     context = {'form': form, 'title':title}
     return render(request, 'templates/blog/edit.html', context)
+
+def render_markdown(request):
+    markdown_content = request.POST.get("markdown_content")
+    html_content = markdown.markdown(markdown_content)
+    context = {'html_content' : html_content}
+    return render(request, 'templates/blog/preview.html', context)
